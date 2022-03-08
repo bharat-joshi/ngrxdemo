@@ -6,7 +6,9 @@ import { StoreModule } from '@ngrx/store';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import * as fromReducer from './reducers/gallary.reducer'
-
+import { HttpClientModule } from '@angular/common/http'
+import { EffectsModule } from '@ngrx/effects';
+import * as fromEffect from './effects/album.effects'
 @NgModule({
   declarations: [
     AppComponent
@@ -15,7 +17,9 @@ import * as fromReducer from './reducers/gallary.reducer'
     BrowserModule,
     AppRoutingModule,
     StoreModule.forRoot({gallaryList : fromReducer.AlbumReducer}),
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    HttpClientModule,
+    EffectsModule.forRoot([fromEffect.AlbumEffect]),
   ],
   providers: [],
   bootstrap: [AppComponent]

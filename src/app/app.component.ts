@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
 import { AlbumModel } from './models/album.model';
 import * as fromStore from './reducers/gallary.reducer';
 import * as fromAction from './action/gallary.action';
-import { selectGallarylist } from './selectors/gallary.selectors';
+import { getMessage, selectGallarylist } from './selectors/gallary.selectors';
 
 @Component({
   selector: 'app-root',
@@ -15,6 +15,7 @@ import { selectGallarylist } from './selectors/gallary.selectors';
 export class AppComponent {
   title = 'demo2';
   albumList$: Observable<AlbumModel[]>;
+  isLoading$: Observable<boolean>;
   albumForm: FormGroup;
   isSubmitted = false;
   isEdit = false;
@@ -22,7 +23,9 @@ export class AppComponent {
 
   ngOnInit(): void {
     this.albumList$ = this.store.select(selectGallarylist);
+    this.isLoading$ = this.store.select(getMessage)
     this.setupForm();
+    this.store.dispatch(fromAction.GET_ALBUM());
   }
 
   setupForm() {
@@ -63,11 +66,12 @@ export class AppComponent {
   identify(index: any, item: any) {
     return item;
   }
-  updateItem()
-  {
-
+  updateItem() {
     this.store.dispatch(
-      fromAction.UPDATE_ALBUM({ albumId:this.albumForm.value.albumId, payload: this.albumForm.value })
+      fromAction.UPDATE_ALBUM({
+        albumId: this.albumForm.value.albumId,
+        payload: this.albumForm.value,
+      })
     );
   }
 }

@@ -59,6 +59,10 @@
   </form>
 </div>
 
+<div *ngIf="isLoading$ | async">
+    Loading......
+</div>
+
 <div *ngIf="albumList$ | async as user">
   <table id="customers">
     <tr>
