@@ -1,1 +1,79 @@
-<div *ngIf="albumsList$">{{this.albumsList$}}</div>
+<div style="margin-bottom: 10px;">
+  <form [formGroup]="albumForm">
+    <div>
+      albumid : <input type="text" formControlName="albumId" />
+      <span
+        class="error"
+        *ngIf="
+          albumForm.get('albumId')?.errors && (albumForm.get('albumId')?.touched || isSubmitted)
+        "
+        >Required</span
+      >
+    </div>
+
+    <div>
+      id : <input type="text" formControlName="id" />
+      <span
+        class="error"
+        *ngIf="
+          albumForm.get('id')?.errors && (albumForm.get('id')?.touched || isSubmitted)
+        "
+        >Required</span
+      >
+    </div>
+    <div>
+      thumbnailUrl : <input type="text" formControlName="thumbnailUrl" />
+      <span
+        class="error"
+        *ngIf="
+          albumForm.get('thumbnailUrl')?.errors && (albumForm.get('thumbnailUrl')?.touched || isSubmitted)
+        "
+        >Required</span
+      >
+    </div>
+    <div>
+      title : <input type="text" formControlName="title" />
+      <span
+        class="error"
+        *ngIf="
+          albumForm.get('title')?.errors && (albumForm.get('title')?.touched || isSubmitted)
+        "
+        >Required</span
+      >
+    </div>
+    <div>
+      url : <input type="text" formControlName="url" />
+      <span
+        class="error"
+        *ngIf="
+          albumForm.get('url')?.errors && (albumForm.get('url')?.touched || isSubmitted)
+        "
+        >Required</span
+      >
+    </div>
+    <div>
+      <button type="submit" (click)="OnSubmit()">Submit</button>
+    </div>
+  </form>
+</div>
+
+<div *ngIf="albumList$ | async as user">
+  <table id="customers">
+    <tr>
+       <th>no</th>
+      <th>albumId</th>
+      <th>id</th>
+      <th>thumbnailUrl</th>
+      <th>title</th>
+      <th>url</th>
+    </tr>
+    <tr *ngFor="let item of user;let i=index;trackBy:identify">
+      <td>{{ i+1 }}</td>
+      <td>{{ item.albumId }}</td>
+      <td>{{ item.id }}</td>
+      <td>{{ item.thumbnailUrl }}</td>
+      <td>{{ item.title }}</td>
+      <td>{{ item.url }}</td>
+    </tr>
+  </table>
+</div>
