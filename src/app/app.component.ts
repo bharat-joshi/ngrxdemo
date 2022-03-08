@@ -17,6 +17,7 @@ export class AppComponent {
   albumList$: Observable<AlbumModel[]>;
   albumForm: FormGroup;
   isSubmitted = false;
+  isEdit = false;
   constructor(private store: Store<fromStore.State>, private fb: FormBuilder) {}
 
   ngOnInit(): void {
@@ -44,7 +45,29 @@ export class AppComponent {
       fromAction.ADD_ALBUM({ payload: this.albumForm.value })
     );
   }
+
+  resetForm() {
+    this.albumForm.reset();
+    this.isEdit = false;
+  }
+
+  edit(item: any) {
+    this.albumForm.patchValue(item);
+    this.isEdit = true;
+  }
+
+  deleteItem(item: any) {
+    this.store.dispatch(fromAction.DELETE_ALBUM({ albumId: item.albumId }));
+  }
+
   identify(index: any, item: any) {
-    return item
+    return item;
+  }
+  updateItem()
+  {
+
+    this.store.dispatch(
+      fromAction.UPDATE_ALBUM({ albumId:this.albumForm.value.albumId, payload: this.albumForm.value })
+    );
   }
 }

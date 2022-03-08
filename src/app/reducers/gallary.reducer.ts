@@ -11,8 +11,30 @@ export const initialState: State = {
 export const AlbumReducer = createReducer(
   initialState,
   on(fromAction.GET_ALBUM, (state) => ({ ...state, album: state.album })),
-  on(fromAction.ADD_ALBUM, (state, { payload }) => {
-    debugger
-    return { ...state, album: [...state.album, payload] };
+  on(fromAction.ADD_ALBUM, (state, { payload }) => ({
+    ...state,
+    album: [...state.album, payload],
+  })),
+  on(fromAction.DELETE_ALBUM, (state, { albumId }) => ({
+    ...state,
+    album: [...state.album.filter((x) => x.albumId != albumId)],
+  })),
+  on(fromAction.UPDATE_ALBUM, (state, { albumId, payload }) => {
+    return {
+      ...state,
+      album: [...state.album.map((element:any) => {
+           if(element.albumId == albumId)
+           {
+             return payload
+           }
+           else
+           {
+            return element;
+           }
+      })]
+    };
   })
 );
+
+
+
